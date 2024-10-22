@@ -4,10 +4,10 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import express from 'express';
 
-import ENV from './config/env';
-import connectDB from './config/db';
-import router from './routes/index.routes';
-import { errorHandler, invalidRouteHandler } from './middlewares/error.middleware';
+import ENV from './src/config/env';
+import connectDB from './src/config/db';
+import router from './src/routes/index.routes';
+import { errorHandler, invalidRouteHandler } from './src/middlewares/error.middleware';
 
 const app = express();
 

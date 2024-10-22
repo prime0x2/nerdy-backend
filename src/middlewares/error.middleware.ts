@@ -1,7 +1,7 @@
-import type { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from 'express';
 
-import ENV from "../config/env";
-import AppError from "../utils/appError";
+import ENV from '../config/env';
+import AppError from '../utils/appError';
 
 export const sendDevError = (err: AppError, res: Response) => {
   const { statusCode, message } = err;
@@ -25,14 +25,14 @@ export const sendProdError = (err: AppError, res: Response) => {
 };
 
 export const errorHandler = (err: AppError, req: Request, res: Response, next: NextFunction) => {
-  console.log("\n🚨 ", err, "\n");
+  console.log('\n🚨 ', err, '\n');
 
   err.statusCode = err.statusCode || 500;
-  err.message = err.message || "Internal Server Error";
+  err.message = err.message || 'Internal Server Error';
 
-  if (ENV.NODE_ENV === "development") {
+  if (ENV.NODE_ENV === 'development') {
     sendDevError(err, res);
-  } else if (ENV.NODE_ENV === "production") {
+  } else if (ENV.NODE_ENV === 'production') {
     sendProdError(err, res);
   }
 };

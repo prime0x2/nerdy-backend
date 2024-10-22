@@ -1,12 +1,12 @@
 {
   "name": "nerddevs-backend",
   "version": "1.0.0",
-  "main": "src/app.ts",
+  "main": "app.ts",
   "scripts": {
-    "start": "tsc && set \"NODE_ENV=development\" && node dist/src/app.js",
-    "dev": "set \"NODE_ENV=development\" && nodemon src/app.ts",
-    "server:dev": "set \"NODE_ENV=development\" && pm2 start src/app.ts --name 'nerddevs-backend-dev'",
-    "server:prod": "tsc && set \"NODE_ENV=production\" && pm2 start dist/src/app.js --name 'nerddevs-backend-prod'"
+    "start": "tsc && set \"NODE_ENV=development\" && node dist/app.js",
+    "dev": "set \"NODE_ENV=development\" && nodemon app.ts",
+    "server:dev": "set \"NODE_ENV=development\" && pm2 start app.ts --name 'nerddevs-backend-dev'",
+    "server:prod": "tsc && set \"NODE_ENV=production\" && pm2 start dist/app.js --name 'nerddevs-backend-prod'"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "express-validator": "^7.2.0",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
     "mongoose": "^8.7.2",
     "morgan": "^1.10.0"
   },
