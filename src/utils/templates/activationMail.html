@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Activate Your Account</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; margin: 0; padding: 0">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border: 1px solid #dddddd">
+      <h1 style="color: #333333; text-align: center">Activate Your Account</h1>
+      <p style="color: #555555; line-height: 1.6">Hello {{firstName}},</p>
+      <p style="color: #555555; line-height: 1.6">
+        Thank you for signing up! To complete your registration and activate your account, please click the button
+        below:
+      </p>
+      <a
+        href="{{activationLink}}"
+        style="
+          display: block;
+          width: 200px;
+          margin: 20px auto;
+          padding: 10px 15px;
+          background-color: #28a745;
+          color: white;
+          text-align: center;
+          text-decoration: none;
+          font-size: 16px;
+          border-radius: 5px;
+        "
+        >Activate Account</a
+      >
+      <p style="color: #555555; line-height: 1.6">
+        If the button above doesn’t work, copy and paste this link into your browser:
+      </p>
+      <a href="{{activationLink}}" target="_blank" style="color: #28a745"><span>{{activationLink}}</span></a>
+      <p style="color: #555555; line-height: 1.6; font-weight: 700">
+        Please note that the token will expire within {{expiresIn}} seconds.
+      </p>
+      <p style="color: #555555; line-height: 1.6">If you did not create an account, please ignore this email.</p>
+      <p style="color: #555555; line-height: 1.6">Best regards,<br />Nerd Devs Task</p>
+      <div style="margin-top: 20px; text-align: center; font-size: 12px; color: #777777">
+        <p>
+          You are receiving this email because you signed up at our website. If you did not sign up, please disregard
+          this email.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
