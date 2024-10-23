@@ -28,7 +28,7 @@ export const createUser = catchAsync(async (req: Request, res: Response, next: N
 
   if (user) {
     const token = generateToken({ email }, ENV.MAIL_TOKEN_EXPIRY);
-    const activationLink = `${req.protocol}://${req.get('host')}/api/auth/activate?token=${token}`;
+    const activationLink = `${ENV.CORS_ORIGIN}/verify?token=${token}`;
 
     const template = await templateParser({
       firstName,
@@ -93,7 +93,7 @@ export const requestNewActivationMail = catchAsync(async (req: Request, res: Res
   }
 
   const token = generateToken({ email }, ENV.MAIL_TOKEN_EXPIRY);
-  const activationLink = `${req.protocol}://${req.get('host')}/api/auth/activate?token=${token}`;
+  const activationLink = `${ENV.CORS_ORIGIN}/verify?token=${token}`;
 
   const template = await templateParser({
     firstName: user.firstName,
