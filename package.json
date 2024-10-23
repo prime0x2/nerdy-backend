@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "app.ts",
   "scripts": {
-    "start": "tsc && set \"NODE_ENV=development\" && node dist/app.js",
+    "start": "tsc && cp -r ./src/utils/templates ./dist/src/utils/templates && set \"NODE_ENV=development\" && node dist/app.js",
     "dev": "set \"NODE_ENV=development\" && nodemon app.ts",
     "server:dev": "set \"NODE_ENV=development\" && pm2 start app.ts --name 'nerddevs-backend-dev'",
-    "server:prod": "tsc && set \"NODE_ENV=production\" && pm2 start dist/app.js --name 'nerddevs-backend-prod'"
+    "server:prod": "tsc && cp -r ./src/utils/templates ./dist/src/utils/templates && set \"NODE_ENV=production\" && pm2 start dist/app.js --name 'nerddevs-backend-prod'"
   },
   "keywords": [],
   "author": "",

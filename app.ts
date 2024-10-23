@@ -14,7 +14,12 @@ const app = express();
 
 /* -------- Middleware -------- */
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ENV.CORS_ORIGIN,
+    methods: ['GET', 'POST'],
+  })
+);
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());

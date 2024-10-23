@@ -3,7 +3,7 @@
  *
  * @example
  * ```javascript
- * throw new HttpException(404, 'Resource not found');
+ * throw new AppError(404, 'Resource not found');
  * ```
  *
  * Common HTTP status codes:

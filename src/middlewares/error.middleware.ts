@@ -24,7 +24,7 @@ export const sendProdError = (err: AppError, res: Response) => {
   });
 };
 
-export const errorHandler = (err: AppError, req: Request, res: Response, next: NextFunction) => {
+export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
   console.log('\n🚨 ', err, '\n');
 
   err.statusCode = err.statusCode || 500;

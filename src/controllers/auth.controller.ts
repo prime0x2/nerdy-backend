@@ -33,7 +33,7 @@ export const createUser = catchAsync(async (req: Request, res: Response, next: N
     const template = await templateParser({
       firstName,
       activationLink,
-      expiresIn: getReadableExpiration(ENV.MAIL_TOKEN_EXPIRY as string),
+      expiresIn: getReadableExpiration(ENV.MAIL_TOKEN_EXPIRY),
     });
     sendMail({
       to: email,
@@ -98,7 +98,7 @@ export const requestNewActivationMail = catchAsync(async (req: Request, res: Res
   const template = await templateParser({
     firstName: user.firstName,
     activationLink,
-    expiresIn: getReadableExpiration(ENV.MAIL_TOKEN_EXPIRY as string),
+    expiresIn: getReadableExpiration(ENV.MAIL_TOKEN_EXPIRY),
   });
   sendMail({
     to: email as string,
