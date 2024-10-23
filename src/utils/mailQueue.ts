@@ -1,5 +1,6 @@
 import Bull from 'bull';
+import ENV from '../config/env';
 
 export const mailQueue = new Bull('email', {
-  redis: 'redis://127.0.0.1:6379',
+  redis: ENV.REDIS_URI,
 });

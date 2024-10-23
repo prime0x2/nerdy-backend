@@ -1,8 +1,6 @@
 import fs from 'fs';
 import Handlebars from 'handlebars';
 
-// templates/activationMail.html
-
 export interface ActivationTemplateData {
   firstName: string;
   activationLink: string;
