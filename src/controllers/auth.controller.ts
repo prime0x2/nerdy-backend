@@ -52,8 +52,6 @@ export const createUser = catchAsync(async (req: Request, res: Response, next: N
 export const activateUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const { token } = req.query;
 
-  console.log('Token: ', token);
-
   if (!token) {
     return next(new AppError(400, 'No token provided'));
   }
@@ -111,5 +109,28 @@ export const requestNewActivationMail = catchAsync(async (req: Request, res: Res
   res.status(200).json({
     success: true,
     message: 'A new verification email has been sent to your email address',
+  });
+});
+
+export const loginUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return next(new AppError(400, 'Please provide email and password'));
+  }
+
+  const user = await UserModel.findOne({ email }).select('+password');
+
+  if (!user || !(await user.isValidPassword(password))) {
+    return next(new AppError(401, 'Incorrect email or password'));
+  }
+
+  if (!user.isEmailVerified) {
+    return next(new AppError(401, 'Please verify your email to activate your account before logging in'));
+  }
+
+  res.status(200).json({
+    success: true,
+    message: 'Login successful',
   });
 });
