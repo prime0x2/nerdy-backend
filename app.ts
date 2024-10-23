@@ -7,6 +7,7 @@ import express from 'express';
 import ENV from './src/config/env';
 import connectDB from './src/config/db';
 import router from './src/routes/index.routes';
+import { mailWorker } from './src/workers/mail.worker';
 import { errorHandler, invalidRouteHandler } from './src/middlewares/error.middleware';
 
 const app = express();
@@ -33,8 +34,10 @@ app.use(errorHandler);
 const server = http.createServer(app);
 
 connectDB().then(() => {
+  mailWorker();
+
   server.listen(ENV.PORT, () => {
-    console.log(`Server is running on port ${ENV.PORT}`);
-    console.log(`API is running on http://localhost:${ENV.PORT}/api`);
+    console.log(`🚀 Server is running on port ${ENV.PORT}`);
+    console.log(`🚀 API is running on http://localhost:${ENV.PORT}/api`);
   });
 });
