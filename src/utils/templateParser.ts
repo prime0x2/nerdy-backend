@@ -4,6 +4,7 @@ import Handlebars from 'handlebars';
 export interface ActivationTemplateData {
   firstName: string;
   activationLink: string;
+  expiresIn: string;
 }
 
 const templateParser = async (data: ActivationTemplateData) => {
