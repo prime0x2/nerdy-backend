@@ -77,3 +77,39 @@ export const activateUser = catchAsync(async (req: Request, res: Response, next:
     message: 'Email verification successful',
   });
 });
+
+export const requestNewActivationMail = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const { email } = req.query;
+
+  if (!email) {
+    return next(new AppError(400, 'Please provide email'));
+  }
+
+  const user = await UserModel.findOne({ email });
+  if (!user) {
+    return next(new AppError(404, 'User not found'));
+  }
+
+  if (user.isEmailVerified) {
+    return next(new AppError(400, 'Email is already verified'));
+  }
+
+  const token = generateToken({ email }, ENV.MAIL_TOKEN_EXPIRY);
+  const activationLink = `${req.protocol}://${req.get('host')}/api/auth/activate?token=${token}`;
+
+  const template = await templateParser({
+    firstName: user.firstName,
+    activationLink,
+    expiresIn: getReadableExpiration(ENV.MAIL_TOKEN_EXPIRY as string),
+  });
+  sendMail({
+    to: email as string,
+    subject: 'Email Verification',
+    html: template,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: 'A new verification email has been sent to your email address',
+  });
+});
