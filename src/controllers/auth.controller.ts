@@ -8,7 +8,7 @@ import templateParser from '../utils/templateParser';
 
 import { sendMail } from '../utils/sendMail';
 import { getReadableExpiration } from '../utils/helper';
-import { generateToken } from '../config/jwt';
+import { generateToken, verifyToken } from '../config/jwt';
 
 export const createUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const { firstName, lastName, email, password, mobileNumber } = req.body;
@@ -27,7 +27,7 @@ export const createUser = catchAsync(async (req: Request, res: Response, next: N
   });
 
   if (user) {
-    const token = btoa(generateToken({ email }, ENV.MAIL_TOKEN_EXPIRY));
+    const token = generateToken({ email }, ENV.MAIL_TOKEN_EXPIRY);
     const activationLink = `${req.protocol}://${req.get('host')}/api/auth/activate?token=${token}`;
 
     const template = await templateParser({
@@ -46,5 +46,34 @@ export const createUser = catchAsync(async (req: Request, res: Response, next: N
     success: true,
     message:
       'Registration successful. A verification email has been sent to your email address. Please verify your email to activate your account.',
+  });
+});
+
+export const activateUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const { token } = req.query;
+
+  console.log('Token: ', token);
+
+  if (!token) {
+    return next(new AppError(400, 'No token provided'));
+  }
+
+  const decoded = verifyToken(token as string) as { email: string };
+  const user = await UserModel.findOne({ email: decoded.email });
+
+  if (!user) {
+    return next(new AppError(404, 'User not found'));
+  }
+
+  if (user.isEmailVerified) {
+    return next(new AppError(400, 'Email is already verified'));
+  }
+
+  user.isEmailVerified = true;
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: 'Email verification successful',
   });
 });
